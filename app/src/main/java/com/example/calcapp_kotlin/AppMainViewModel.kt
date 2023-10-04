@@ -97,6 +97,7 @@ class AppMainViewModel: ViewModel() {
         _previousOperation.value = _operationsInProgress.value
     }
 
+    // 符号反転
     private fun changeSign() {
         val str = inputStr.value.takeIf { !it.isEmpty() } ?: run {
             return
@@ -135,5 +136,28 @@ class AppMainViewModel: ViewModel() {
 
         _operationsInProgress.value = Operator.NONE
         secondArgument.value = null
+    }
+
+    // 割合化
+    private fun proportionation() {
+        if (firstArgument == null) return
+
+        val previousOperation = operationsInProgress.value
+        val previousSecondArgument: BigDecimal? = secondArgument.value
+
+        if (secondArgument.value != null) {
+            val previousFirstArgument = firstArgument.value
+            firstArgument.value = secondArgument.value
+            secondArgument.value = BigDecimal("0.01")
+            multiply()
+            secondArgument.value = firstArgument.value
+            firstArgument.value = previousFirstArgument
+        } else {
+            secondArgument.value = BigDecimal("0.01")
+            multiply()
+            secondArgument.value = previousSecondArgument
+        }
+
+        _operationsInProgress.value = previousOperation
     }
 }
