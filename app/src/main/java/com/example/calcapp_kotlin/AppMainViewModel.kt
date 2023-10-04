@@ -22,6 +22,7 @@ class AppMainViewModel: ViewModel() {
     val operationsInProgress: StateFlow<Operator> = _operationsInProgress.asStateFlow()
     val previousOperation: StateFlow<Operator> = _previousOperation.asStateFlow()
 
+    // 挿入
     fun insertNumString(str: String) {
         inputStr.value += str
 
@@ -36,6 +37,7 @@ class AppMainViewModel: ViewModel() {
         }
     }
 
+    // 文字数の足切り
     private fun trimInputString() {
         val maxLen = when {
             !inputStr.value.contains(".") && !inputStr.value.contains("-") -> 9
@@ -91,5 +93,28 @@ class AppMainViewModel: ViewModel() {
         firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
+    }
+
+    // 等号
+    private fun equal() {
+        if (operationsInProgress.value == Operator.ADDITION) {
+            addition()
+        } else if (operationsInProgress.value == Operator.SUBTRACTION) {
+            subtraction()
+        } else if (operationsInProgress.value == Operator.MULTIPLY) {
+            multiply()
+        } else if (operationsInProgress.value == Operator.DIVIDE) {
+            divide()
+        } else if ((operationsInProgress.value == Operator.NONE) && (previousOperation.value != Operator.NONE)) {
+            val num = previousArgument?.value ?: return
+
+            _operationsInProgress.value = previousOperation.value
+            secondArgument.value = num
+
+            equal()
+        }
+
+        _operationsInProgress.value = Operator.NONE
+        secondArgument.value = null
     }
 }
