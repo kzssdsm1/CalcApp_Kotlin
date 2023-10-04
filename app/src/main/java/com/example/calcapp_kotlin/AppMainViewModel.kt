@@ -185,4 +185,18 @@ class AppMainViewModel: ViewModel() {
         secondArgument.value = null
         previousArgument.value = null
     }
+
+    private fun arrangeDisplayNumber(displayStr: String): String {
+        _canShowDetailNumber.value = false
+
+        val num = BigDecimal(displayStr)
+
+        if (num > BigDecimal("999999999.999997") || (num < BigDecimal("0.000000001") && !displayStr.contains("-")) || (displayStr.contains("-") && num < BigDecimal("0.000000001") && num != BigDecimal("0.0"))) {
+            return ""
+        } else if (displayStr == "null") {
+            return "Error"
+        } else {
+            return ""
+        }
+    }
 }
