@@ -11,13 +11,16 @@ class AppMainViewModel: ViewModel() {
 
     private val _displayingNumber: MutableStateFlow<String> = MutableStateFlow("")
     private val _operationsInProgress: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
+    private val _previousOperation: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
 
     private val inputStr = mutableStateOf("")
     private val firstArgument = mutableStateOf<BigDecimal?>(null)
     private val secondArgument = mutableStateOf<BigDecimal?>(null)
+    private val previousArgument = mutableStateOf<BigDecimal?>(null)
 
     val displayingNumber: StateFlow<String> = _displayingNumber.asStateFlow()
     val operationsInProgress: StateFlow<Operator> = _operationsInProgress.asStateFlow()
+    val previousOperation: StateFlow<Operator> = _previousOperation.asStateFlow()
 
     fun insertNumString(str: String) {
         inputStr.value += str
@@ -42,6 +45,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = inputStr.value.take(maxLen)
     }
 
+    // 加算
     private fun addition() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.ADDITION
@@ -49,5 +53,43 @@ class AppMainViewModel: ViewModel() {
         val secondArg = secondArgument?.value ?: return
 
         firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO
+        previousArgument.value = firstArgument.value
+        _previousOperation.value = _operationsInProgress.value
+    }
+
+    // 減算
+    private fun subtraction() {
+        inputStr.value = ""
+        _operationsInProgress.value = Operator.SUBTRACTION
+
+        val secondArg = secondArgument?.value ?: return
+
+        firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO
+        previousArgument.value = firstArgument.value
+        _previousOperation.value = _operationsInProgress.value
+    }
+
+    // 乗算
+    private fun multiply() {
+        inputStr.value = ""
+        _operationsInProgress.value = Operator.MULTIPLY
+
+        val secondArg = secondArgument?.value ?: return
+
+        firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO
+        previousArgument.value = firstArgument.value
+        _previousOperation.value = _operationsInProgress.value
+    }
+
+    // 除算
+    private fun divide() {
+        inputStr.value = ""
+        _operationsInProgress.value = Operator.DIVIDE
+
+        val secondArg = secondArgument?.value ?: return
+
+        firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO
+        previousArgument.value = firstArgument.value
+        _previousOperation.value = _operationsInProgress.value
     }
 }
