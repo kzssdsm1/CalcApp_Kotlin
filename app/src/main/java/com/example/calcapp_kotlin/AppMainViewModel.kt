@@ -54,7 +54,8 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument?.value ?: return
 
-        firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO
+
+        firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -66,7 +67,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument?.value ?: return
 
-        firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO
+        firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO.minus(secondArg)
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -78,7 +79,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument?.value ?: return
 
-        firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO
+        firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO.times(secondArg)
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -90,7 +91,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument?.value ?: return
 
-        firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO
+        firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
