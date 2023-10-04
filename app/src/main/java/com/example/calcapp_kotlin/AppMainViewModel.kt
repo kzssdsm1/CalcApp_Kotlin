@@ -12,12 +12,14 @@ class AppMainViewModel: ViewModel() {
     private val _displayingNumber: MutableStateFlow<String> = MutableStateFlow("")
     private val _operationsInProgress: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
     private val _previousOperation: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
+    private val _canShowDetailNumber: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val inputStr = mutableStateOf("")
     private val firstArgument = mutableStateOf<BigDecimal?>(null)
     private val secondArgument = mutableStateOf<BigDecimal?>(null)
     private val previousArgument = mutableStateOf<BigDecimal?>(null)
 
+    val canShowDetailNumber: StateFlow<Boolean> = _canShowDetailNumber.asStateFlow()
     val displayingNumber: StateFlow<String> = _displayingNumber.asStateFlow()
     val operationsInProgress: StateFlow<Operator> = _operationsInProgress.asStateFlow()
     val previousOperation: StateFlow<Operator> = _previousOperation.asStateFlow()
@@ -170,5 +172,17 @@ class AppMainViewModel: ViewModel() {
         } else {
             inputStr.value += "."
         }
+    }
+
+    // 情報のクリア
+    private fun clearText() {
+        _canShowDetailNumber.value = false
+        _displayingNumber.value = "0"
+        inputStr.value = ""
+        _operationsInProgress.value = Operator.NONE
+        _previousOperation.value = Operator.NONE
+        firstArgument.value = null
+        secondArgument.value = null
+        previousArgument.value = null
     }
 }
