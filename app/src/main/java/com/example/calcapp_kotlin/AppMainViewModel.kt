@@ -160,4 +160,15 @@ class AppMainViewModel: ViewModel() {
 
         _operationsInProgress.value = previousOperation
     }
+
+    // 小数点挿入
+    fun insertDecimalPoint() {
+        if (((!inputStr.value.contains(".")) && (inputStr.value.length < 9)) || ((!inputStr.value.contains(".")) && (inputStr.value.contains("-")) && (inputStr.value.length < 10))) return
+
+        if (inputStr.value.isEmpty()) {
+            inputStr.value = "0."
+        } else {
+            inputStr.value += "."
+        }
+    }
 }
