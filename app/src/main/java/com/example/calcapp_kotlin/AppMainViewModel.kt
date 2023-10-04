@@ -54,8 +54,9 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument?.value ?: return
 
-
         firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
+
+
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -94,6 +95,23 @@ class AppMainViewModel: ViewModel() {
         firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
+    }
+
+    private fun changeSign() {
+        val str = inputStr.value.takeIf { !it.isEmpty() } ?: run {
+            return
+        }
+
+        val num = str.toBigDecimalOrNull()
+        val timed = num?.times(BigDecimal("-1")) ?: return
+
+        inputStr.value = timed.toString()
+
+        if (operationsInProgress.value != Operator.NONE) {
+            secondArgument.value = timed
+        } else {
+            firstArgument.value = timed
+        }
     }
 
     // 等号
