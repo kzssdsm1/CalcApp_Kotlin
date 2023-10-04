@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
+import com.example.calcapp_kotlin.ui.theme.log
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class AppMainViewModel: ViewModel() {
 
@@ -198,5 +200,56 @@ class AppMainViewModel: ViewModel() {
         } else {
             return ""
         }
+    }
+
+    private fun calcExp(num: BigDecimal): String {
+        var deci = num
+        var isMinus = false
+
+        if(deci < BigDecimal.ZERO) {
+            isMinus = true
+            deci *= BigDecimal("-1")
+        }
+
+        val e = BigDecimal.TEN
+        val log = deci.log(e)
+
+        var rounded = log?.setScale(0, RoundingMode.DOWN) ?: return "Error"
+        var isRoundedMinus = false
+
+        if (rounded < BigDecimal.ZERO) {
+            isRoundedMinus = true
+            var tempNum = rounded
+            tempNum *= BigDecimal("-1")
+            rounded = tempNum
+        }
+
+        val powed = Math.pow(10.0, rounded.toDouble())
+
+        var divided: BigDecimal?
+
+        if (!isRoundedMinus) {
+            divided = deci / BigDecimal(powed)
+        } else {
+            divided = deci * BigDecimal(powed)
+        }
+
+        val rounded2 = divided?.setScale(5, RoundingMode.HALF_UP) ?: return "Error"
+
+        var result = ""
+
+        if (isMinus) {
+            result = "-${rounded2}e${rounded}"
+        } else {
+            if (isRoundedMinus) {
+                result = "${rounded2}e-${rounded}"
+            } else {
+                result = "${rounded2}e${rounded}"
+            }
+        }
+
+        _canShowDetailNumber.value = true
+
+        return result
     }
 }
