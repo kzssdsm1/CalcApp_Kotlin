@@ -194,6 +194,21 @@ class AppMainViewModel: ViewModel() {
         previousArgument.value = null
     }
 
+    fun setOperator(paramOperator: Operator) {
+        when (paramOperator) {
+            Operator.DETAIL -> return
+            Operator.PLUS_MINUS -> changeSign()
+            Operator.ALL_CLEAR -> clearText()
+            Operator.PERCENT -> proportionation()
+            Operator.DIVIDE -> divide()
+            Operator.MULTIPLY -> multiply()
+            Operator.SUBTRACTION -> subtraction()
+            Operator.ADDITION -> addition()
+            Operator.EQUAL -> equal()
+            Operator.NONE -> return
+        }
+    }
+
     private fun arrangeDisplayNumber(displayStr: String): String {
         _canShowDetailNumber.value = false
 
