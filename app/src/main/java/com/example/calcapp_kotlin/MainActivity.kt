@@ -15,12 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.calcapp_kotlin.ui.theme.CalcApp_KotlinTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: CountViewModel by viewModels<CountViewModel>()
+    private val viewModel: AppMainViewModel by viewModels<AppMainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CountUp(viewModel = viewModel)
+
         }
     }
 }

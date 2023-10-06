@@ -13,7 +13,7 @@ import java.util.*
 
 class AppMainViewModel: ViewModel() {
 
-    private val _displayingNumber: MutableStateFlow<String> = MutableStateFlow("")
+    private val _displayingNumber: MutableStateFlow<String> = MutableStateFlow("0")
     private val _operationsInProgress: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
     private val _previousOperation: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
     private val _canShowDetailNumber: MutableStateFlow<Boolean> = MutableStateFlow(false)
