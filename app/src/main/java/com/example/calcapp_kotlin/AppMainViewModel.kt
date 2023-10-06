@@ -61,8 +61,7 @@ class AppMainViewModel: ViewModel() {
         val secondArg = secondArgument?.value ?: return
 
         firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
-
-
+        _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -75,6 +74,7 @@ class AppMainViewModel: ViewModel() {
         val secondArg = secondArgument?.value ?: return
 
         firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO.minus(secondArg)
+        _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -87,6 +87,7 @@ class AppMainViewModel: ViewModel() {
         val secondArg = secondArgument?.value ?: return
 
         firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO.times(secondArg)
+        _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -99,6 +100,7 @@ class AppMainViewModel: ViewModel() {
         val secondArg = secondArgument?.value ?: return
 
         firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
+        _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
     }
@@ -113,6 +115,8 @@ class AppMainViewModel: ViewModel() {
         val timed = num?.times(BigDecimal("-1")) ?: return
 
         inputStr.value = timed.toString()
+
+        _displayingNumber.value = arrangeDisplayNumber(inputStr.value)
 
         if (operationsInProgress.value != Operator.NONE) {
             secondArgument.value = timed
