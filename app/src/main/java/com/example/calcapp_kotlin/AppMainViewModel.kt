@@ -8,6 +8,8 @@ import androidx.compose.runtime.mutableStateOf
 import com.example.calcapp_kotlin.ui.theme.log
 import java.math.BigDecimal
 import java.math.RoundingMode
+import java.text.NumberFormat
+import java.util.*
 
 class AppMainViewModel: ViewModel() {
 
@@ -194,12 +196,20 @@ class AppMainViewModel: ViewModel() {
         val num = BigDecimal(displayStr)
 
         if (num > BigDecimal("999999999.999997") || (num < BigDecimal("0.000000001") && !displayStr.contains("-")) || (displayStr.contains("-") && num < BigDecimal("0.000000001") && num != BigDecimal("0.0"))) {
-            return ""
+            return calcExp(num)
         } else if (displayStr == "null") {
             return "Error"
         } else {
-            return ""
+            return roundNumber(displayStr)
         }
+    }
+
+    private fun roundNumber(valueStr: String): String {
+        val roundNum = BigDecimal(valueStr).setScale(9, RoundingMode.HALF_UP)
+        val nf = NumberFormat.getNumberInstance(Locale.getDefault())
+        val formattedNum = nf.format(roundNum.toDouble())
+
+        return formattedNum
     }
 
     private fun calcExp(num: BigDecimal): String {
