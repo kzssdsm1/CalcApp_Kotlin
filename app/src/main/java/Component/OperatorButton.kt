@@ -21,12 +21,12 @@ fun OperatorButton(
     Button(
         modifier = modifier
             .fillMaxHeight()
-            .padding(all = 8.dp),
+            .padding(all = 4.dp),
         onClick = onTap
     ) {
         Text(
             text = operatorStr,
-            fontSize = 40.sp
+            fontSize = 30.sp
         )
     }
 }

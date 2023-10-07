@@ -20,7 +20,7 @@ enum class Operator {
             SUBTRACTION -> "-"
             ADDITION -> "+"
             EQUAL -> "="
-            PLUS_MINUS -> "plusminus"
+            PLUS_MINUS -> "PM"
             ALL_CLEAR -> if (isAC) "AC" else "C"
             DETAIL -> "SD"
             NONE -> ""
