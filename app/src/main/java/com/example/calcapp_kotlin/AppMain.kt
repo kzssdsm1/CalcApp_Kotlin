@@ -1,33 +1,19 @@
 package com.example.calcapp_kotlin
 
-import Component.CircleButton
-import Component.NumberButton
-import Component.OperatorButton
 import Component.RectButton
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun AppMain(
     viewModel: AppMainViewModel = viewModel()
 ) {
-    val numbers = arrayOf(
-        arrayOf("7", "8", "9"),
-        arrayOf("4", "5", "6"),
-        arrayOf("1", "2", "3")
-        )
-
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly
@@ -61,7 +47,7 @@ fun AppMain(
 
             RectButton(
                 modifier = Modifier.weight(1.0f),
-                buttonText = "AC",
+                buttonText = "C",
                 onTap = {
                     viewModel.setOperator(Operator.ALL_CLEAR)
                 } // onTap
@@ -71,7 +57,172 @@ fun AppMain(
                 modifier = Modifier.weight(1.0f),
                 buttonText = "%",
                 onTap = {
-                    viewModel.pro
+                    viewModel.setOperator(Operator.PERCENT)
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "÷",
+                onTap = {
+                    viewModel.setOperator(Operator.DIVIDE)
+                } // onTap
+            ) // RectButton
+        } // Row
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .weight(1.0f),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "7",
+                onTap = {
+                    viewModel.insertNumString("7")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "8",
+                onTap = {
+                    viewModel.insertNumString("8")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "9",
+                onTap = {
+                    viewModel.insertNumString("9")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "×",
+                onTap = {
+                    viewModel.setOperator(Operator.MULTIPLY)
+                } // onTap
+            ) // RectButton
+        } // Row
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "4",
+                onTap = {
+                    viewModel.insertNumString("4")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "5",
+                onTap = {
+                    viewModel.insertNumString("5")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "6",
+                onTap = {
+                    viewModel.insertNumString("6")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "-",
+                onTap = {
+                    viewModel.setOperator(Operator.MULTIPLY)
+                } // onTap
+            ) // RectButton
+        } // Row
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "1",
+                onTap = {
+                    viewModel.insertNumString("1")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "2",
+                onTap = {
+                    viewModel.insertNumString("2")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "3",
+                onTap = {
+                    viewModel.insertNumString("3")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "+",
+                onTap = {
+                    viewModel.setOperator(Operator.MULTIPLY)
+                } // onTap
+            ) // RectButton
+        } // Row
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1.0f),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "0",
+                onTap = {
+                    viewModel.insertNumString("0")
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = ".",
+                onTap = {
+                    viewModel.setOperator(Operator.SETDECIMAL)
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "P",
+                onTap = {
+                    viewModel.setOperator(Operator.PLUS_MINUS)
+                } // onTap
+            ) // RectButton
+
+            RectButton(
+                modifier = Modifier.weight(1.0f),
+                buttonText = "=",
+                onTap = {
+                    viewModel.setOperator(Operator.EQUAL)
                 } // onTap
             ) // RectButton
         } // Row

@@ -1,6 +1,5 @@
 package com.example.calcapp_kotlin
 
-import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +32,7 @@ class AppMainViewModel: ViewModel() {
     fun insertNumString(str: String) {
         inputStr.value += str
 
-        //trimInputString()
+        trimInputString()
 
         _displayingNumber.value = inputStr.value
 
@@ -61,7 +60,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.ADDITION
 
-        val secondArg = secondArgument?.value ?: return
+        val secondArg = secondArgument.value ?: return
 
         firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
@@ -74,7 +73,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.SUBTRACTION
 
-        val secondArg = secondArgument?.value ?: return
+        val secondArg = secondArgument.value ?: return
 
         firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO.minus(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
@@ -87,7 +86,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.MULTIPLY
 
-        val secondArg = secondArgument?.value ?: return
+        val secondArg = secondArgument.value ?: return
 
         firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO.times(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
@@ -100,7 +99,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.DIVIDE
 
-        val secondArg = secondArgument?.value ?: return
+        val secondArg = secondArgument.value ?: return
 
         firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
@@ -110,7 +109,7 @@ class AppMainViewModel: ViewModel() {
 
     // 符号反転
     private fun changeSign() {
-        val str = inputStr.value.takeIf { !it.isEmpty() } ?: run {
+        val str = inputStr.value.takeIf { it.isNotEmpty() } ?: run {
             return
         }
 
@@ -139,7 +138,7 @@ class AppMainViewModel: ViewModel() {
         } else if (operationsInProgress.value == Operator.DIVIDE) {
             divide()
         } else if ((operationsInProgress.value == Operator.NONE) && (previousOperation.value != Operator.NONE)) {
-            val num = previousArgument?.value ?: return
+            val num = previousArgument.value ?: return
 
             _operationsInProgress.value = previousOperation.value
             secondArgument.value = num
@@ -153,7 +152,7 @@ class AppMainViewModel: ViewModel() {
 
     // 割合化
     private fun proportionation() {
-        if (firstArgument == null) return
+        if (firstArgument.value == null) return
 
         val previousOperation = operationsInProgress.value
         val previousSecondArgument: BigDecimal? = secondArgument.value
@@ -180,8 +179,10 @@ class AppMainViewModel: ViewModel() {
 
         if (inputStr.value.isEmpty()) {
             inputStr.value = "0."
+            _displayingNumber.value = arrangeDisplayNumber(inputStr.value)
         } else {
             inputStr.value += "."
+            _displayingNumber.value = arrangeDisplayNumber(inputStr.value)
         }
     }
 
@@ -199,7 +200,7 @@ class AppMainViewModel: ViewModel() {
 
     fun setOperator(paramOperator: Operator) {
         when (paramOperator) {
-            Operator.DETAIL -> return
+            Operator.DETAIL -> _canShowDetailNumber.value = true
             Operator.PLUS_MINUS -> changeSign()
             Operator.ALL_CLEAR -> clearText()
             Operator.PERCENT -> proportionation()
@@ -259,7 +260,7 @@ class AppMainViewModel: ViewModel() {
 
         val powed = Math.pow(10.0, rounded.toDouble())
 
-        var divided: BigDecimal?
+        val divided: BigDecimal?
 
         if (!isRoundedMinus) {
             divided = deci / BigDecimal(powed)
@@ -267,9 +268,9 @@ class AppMainViewModel: ViewModel() {
             divided = deci * BigDecimal(powed)
         }
 
-        val rounded2 = divided?.setScale(5, RoundingMode.HALF_UP) ?: return "Error"
+        val rounded2 = divided.setScale(5, RoundingMode.HALF_UP) ?: return "Error"
 
-        var result = ""
+        val result: String
 
         if (isMinus) {
             result = "-${rounded2}e${rounded}"
