@@ -201,7 +201,7 @@ class AppMainViewModel: ViewModel() {
 
     fun setOperator(paramOperator: Operator) {
         when (paramOperator) {
-            Operator.DETAIL -> _canShowDetailNumber.value = true
+            Operator.DETAIL -> return
             Operator.PLUS_MINUS -> changeSign()
             Operator.ALL_CLEAR -> clearText()
             Operator.PERCENT -> proportionation()
