@@ -17,12 +17,13 @@ class AppMainViewModel: ViewModel() {
     private val _operationsInProgress: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
     private val _previousOperation: MutableStateFlow<Operator> = MutableStateFlow(Operator.NONE)
     private val _canShowDetailNumber: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _firstArgument: MutableStateFlow<BigDecimal?> = MutableStateFlow(null)
 
     private val inputStr = mutableStateOf("")
-    private val firstArgument = mutableStateOf<BigDecimal?>(null)
     private val secondArgument = mutableStateOf<BigDecimal?>(null)
     private val previousArgument = mutableStateOf<BigDecimal?>(null)
 
+    val firstArgument: StateFlow<BigDecimal?> = _firstArgument.asStateFlow()
     val canShowDetailNumber: StateFlow<Boolean> = _canShowDetailNumber.asStateFlow()
     val displayingNumber: StateFlow<String> = _displayingNumber.asStateFlow()
     val operationsInProgress: StateFlow<Operator> = _operationsInProgress.asStateFlow()
@@ -39,7 +40,7 @@ class AppMainViewModel: ViewModel() {
         if (operationsInProgress.value != Operator.NONE) {
             secondArgument.value = inputStr.value.toBigDecimalOrNull()
         } else {
-            firstArgument.value = inputStr.value.toBigDecimalOrNull()
+            _firstArgument.value = inputStr.value.toBigDecimalOrNull()
         }
 
         println(displayingNumber.value)
@@ -62,7 +63,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument.value ?: return
 
-        firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
+        _firstArgument.value = firstArgument.value?.plus(secondArg) ?: BigDecimal.ZERO.plus(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
@@ -75,7 +76,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument.value ?: return
 
-        firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO.minus(secondArg)
+        _firstArgument.value = firstArgument.value?.minus(secondArg) ?: BigDecimal.ZERO.minus(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
@@ -88,7 +89,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument.value ?: return
 
-        firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO.times(secondArg)
+        _firstArgument.value = firstArgument.value?.times(secondArg) ?: BigDecimal.ZERO.times(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
@@ -101,7 +102,7 @@ class AppMainViewModel: ViewModel() {
 
         val secondArg = secondArgument.value ?: return
 
-        firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
+        _firstArgument.value = firstArgument.value?.div(secondArg) ?: BigDecimal.ZERO.div(secondArg)
         _displayingNumber.value = arrangeDisplayNumber(firstArgument.value.toString())
         previousArgument.value = firstArgument.value
         _previousOperation.value = _operationsInProgress.value
@@ -123,7 +124,7 @@ class AppMainViewModel: ViewModel() {
         if (operationsInProgress.value != Operator.NONE) {
             secondArgument.value = timed
         } else {
-            firstArgument.value = timed
+            _firstArgument.value = timed
         }
     }
 
@@ -159,11 +160,11 @@ class AppMainViewModel: ViewModel() {
 
         if (secondArgument.value != null) {
             val previousFirstArgument = firstArgument.value
-            firstArgument.value = secondArgument.value
+            _firstArgument.value = secondArgument.value
             secondArgument.value = BigDecimal("0.01")
             multiply()
             secondArgument.value = firstArgument.value
-            firstArgument.value = previousFirstArgument
+            _firstArgument.value = previousFirstArgument
         } else {
             secondArgument.value = BigDecimal("0.01")
             multiply()
@@ -193,7 +194,7 @@ class AppMainViewModel: ViewModel() {
         inputStr.value = ""
         _operationsInProgress.value = Operator.NONE
         _previousOperation.value = Operator.NONE
-        firstArgument.value = null
+        _firstArgument.value = null
         secondArgument.value = null
         previousArgument.value = null
     }
