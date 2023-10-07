@@ -41,7 +41,7 @@ fun AppMain(
                 modifier = Modifier.weight(1.0f),
                 buttonText = "D",
                 onTap = {
-                    viewModel.setOperator(Operator.DETAIL)
+                    viewModel.showSheet()
                 } // onTap
             ) // RectButton
 
@@ -227,4 +227,11 @@ fun AppMain(
             ) // RectButton
         } // Row
     } // Column
+
+    val isSheetShown by viewModel.isSheetShown.collectAsState()
+
+    SheetDialog(
+        isShown = isSheetShown,
+        detailNumber = viewModel.firstArgument.value
+    ) { viewModel.hideSheet() }
 }

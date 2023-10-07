@@ -22,6 +22,8 @@ class AppMainViewModel: ViewModel() {
     private val inputStr = mutableStateOf("")
     private val secondArgument = mutableStateOf<BigDecimal?>(null)
     private val previousArgument = mutableStateOf<BigDecimal?>(null)
+    private val _isSheetShown = MutableStateFlow(false)
+    val isSheetShown = _isSheetShown.asStateFlow()
 
     val firstArgument: StateFlow<BigDecimal?> = _firstArgument.asStateFlow()
     val canShowDetailNumber: StateFlow<Boolean> = _canShowDetailNumber.asStateFlow()
@@ -286,5 +288,14 @@ class AppMainViewModel: ViewModel() {
         _canShowDetailNumber.value = true
 
         return result
+    }
+
+    fun showSheet() {
+        if (firstArgument.value == null) return
+        _isSheetShown.value = true
+    }
+
+    fun hideSheet() {
+        _isSheetShown.value = false
     }
 }
