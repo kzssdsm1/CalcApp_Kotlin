@@ -144,7 +144,7 @@ fun AppMain(
                 modifier = Modifier.weight(1.0f),
                 buttonText = "-",
                 onTap = {
-                    viewModel.setOperator(Operator.MULTIPLY)
+                    viewModel.setOperator(Operator.SUBTRACTION)
                 } // onTap
             ) // RectButton
         } // Row
@@ -183,7 +183,7 @@ fun AppMain(
                 modifier = Modifier.weight(1.0f),
                 buttonText = "+",
                 onTap = {
-                    viewModel.setOperator(Operator.MULTIPLY)
+                    viewModel.setOperator(Operator.ADDITION)
                 } // onTap
             ) // RectButton
         } // Row
