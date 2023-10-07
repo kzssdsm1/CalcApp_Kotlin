@@ -10,21 +10,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun NumberButton(
+fun OperatorButton(
     modifier: Modifier,
-    numberStr: String,
-    onTap: (String) -> Unit
+    operatorStr: String,
+    onTap: Unit
 ) {
     Button(
         modifier = modifier
             .fillMaxHeight()
             .padding(all = 8.dp),
         onClick = {
-            onTap(numberStr)
+            onTap
         }
     ) {
         Text(
-            text = numberStr,
+            text = operatorStr,
             fontSize = 50.sp
         )
     }

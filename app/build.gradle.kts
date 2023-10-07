@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.calcapp_kotlin"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.calcapp_kotlin"

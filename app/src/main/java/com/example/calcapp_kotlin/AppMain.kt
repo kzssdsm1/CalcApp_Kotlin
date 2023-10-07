@@ -1,6 +1,7 @@
 package com.example.calcapp_kotlin
 
 import Component.NumberButton
+import Component.OperatorButton
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.*
@@ -21,11 +22,15 @@ fun AppMain(
         arrayOf("1", "2", "3")
         )
 
+    val onTapNumber: (String) -> Unit = {
+        viewModel.insertNumString(it)
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        val displayNumber by viewModel.displayingNumber.collectAsStateWithLifecycle()
+        val displayNumber by viewModel.displayingNumber.collectAsState()
 
         Text(
             modifier = Modifier
@@ -37,6 +42,23 @@ fun AppMain(
             softWrap = false,
             maxLines = 1
         )
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1.0f),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Operator.values().forEach { it ->
+                if(it == Operator.DETAIL || it == Operator.ALL_CLEAR || it == Operator.PERCENT) {
+                    OperatorButton(
+                        modifier = Modifier.weight(1.0f),
+                        operatorStr = it.buttonText((viewModel.operationsInProgress.value == Operator.NONE && viewModel.previousOperation.value == Operator.NONE)),
+                        onTap = viewModel.setOperator(it)
+                    )
+                }
+            }
+        }
 
         Row(
             modifier = Modifier
@@ -59,7 +81,8 @@ fun AppMain(
                             NumberButton(
                                 modifier = Modifier.weight(1.0f),
                                 numberStr = numbers[row][col],
-                                onTap = viewModel.insertNumString(numbers[row][col]))
+                                onTap = onTapNumber
+                            )
                         }
                     }
                 }

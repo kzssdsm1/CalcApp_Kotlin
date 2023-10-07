@@ -1,5 +1,6 @@
 package com.example.calcapp_kotlin
 
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -41,6 +42,8 @@ class AppMainViewModel: ViewModel() {
         } else {
             firstArgument.value = inputStr.value.toBigDecimalOrNull()
         }
+
+        println(displayingNumber.value)
     }
 
     // 文字数の足切り
