@@ -175,14 +175,14 @@ class AppMainViewModel: ViewModel() {
 
     // 小数点挿入
     private fun insertDecimalPoint() {
-        if (((!inputStr.value.contains(".")) && (inputStr.value.length < 9)) || ((!inputStr.value.contains(".")) && (inputStr.value.contains("-")) && (inputStr.value.length < 10))) return
+        if (!(((!inputStr.value.contains(".")) && (inputStr.value.length < 9)) || ((!inputStr.value.contains(".")) && (inputStr.value.contains("-")) && (inputStr.value.length < 10)))) return
 
         if (inputStr.value.isEmpty()) {
             inputStr.value = "0."
-            _displayingNumber.value = arrangeDisplayNumber(inputStr.value)
+            _displayingNumber.value = inputStr.value
         } else {
             inputStr.value += "."
-            _displayingNumber.value = arrangeDisplayNumber(inputStr.value)
+            _displayingNumber.value = inputStr.value
         }
     }
 
