@@ -10,20 +10,6 @@ enum class Operator {
     SUBTRACTION,
     ADDITION,
     EQUAL,
+    SETDECIMAL,
     NONE;
-
-    fun buttonText(isAC: Boolean): String {
-        return when (this) {
-            PERCENT -> "%"
-            DIVIDE -> "÷"
-            MULTIPLY -> "×"
-            SUBTRACTION -> "-"
-            ADDITION -> "+"
-            EQUAL -> "="
-            PLUS_MINUS -> "PM"
-            ALL_CLEAR -> if (isAC) "AC" else "C"
-            DETAIL -> "SD"
-            NONE -> ""
-        }
-    }
 }

@@ -175,7 +175,7 @@ class AppMainViewModel: ViewModel() {
     }
 
     // 小数点挿入
-    fun insertDecimalPoint() {
+    private fun insertDecimalPoint() {
         if (((!inputStr.value.contains(".")) && (inputStr.value.length < 9)) || ((!inputStr.value.contains(".")) && (inputStr.value.contains("-")) && (inputStr.value.length < 10))) return
 
         if (inputStr.value.isEmpty()) {
@@ -208,6 +208,7 @@ class AppMainViewModel: ViewModel() {
             Operator.SUBTRACTION -> subtraction()
             Operator.ADDITION -> addition()
             Operator.EQUAL -> equal()
+            Operator.SETDECIMAL -> insertDecimalPoint()
             Operator.NONE -> return
         }
     }

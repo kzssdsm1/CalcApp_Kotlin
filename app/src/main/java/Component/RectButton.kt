@@ -10,19 +10,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun NumberButton(
+fun RectButton(
     modifier: Modifier,
-    numberStr: String,
+    buttonText: String,
     onTap: () -> Unit
 ) {
     Button(
         modifier = modifier
             .fillMaxHeight()
-            .padding(all = 4.dp),
+            .padding(all = 8.dp),
         onClick = onTap
     ) {
         Text(
-            text = numberStr,
+            text = buttonText,
             fontSize = 30.sp
         )
     }
