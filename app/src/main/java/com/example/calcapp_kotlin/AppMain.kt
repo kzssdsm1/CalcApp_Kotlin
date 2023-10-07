@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,10 +22,6 @@ fun AppMain(
         arrayOf("4", "5", "6"),
         arrayOf("1", "2", "3")
         )
-
-    val onTapNumber: (String) -> Unit = {
-        viewModel.insertNumString(it)
-    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -45,7 +42,7 @@ fun AppMain(
 
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .weight(1.0f),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -56,24 +53,27 @@ fun AppMain(
                         operatorStr = it.buttonText((viewModel.operationsInProgress.value == Operator.NONE && viewModel.previousOperation.value == Operator.NONE)),
                         onTap = { viewModel.setOperator(it) }
                     )
+                } else {
+                    EmptyView()
                 }
-            }
-        }
+            } // forEach
+        } // Row
 
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .weight(1.0f),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 (0..2).forEach { row ->
                     Row(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
+                            .fillMaxHeight()
                             .weight(1.0f),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
@@ -87,6 +87,50 @@ fun AppMain(
                     }
                 }
             } // Column
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1.0f),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                NumberButton(
+                    modifier = Modifier.weight(1.0f),
+                    numberStr = "0",
+                    onTap = { viewModel.insertNumString("0") }
+                )
+
+                OperatorButton(
+                    modifier = Modifier.weight(1.0f),
+                    operatorStr = ".",
+                    onTap = { viewModel.insertDecimalPoint() }
+                )
+
+                OperatorButton(
+                    modifier = Modifier.weight(1.0f),
+                    operatorStr = "PM",
+                    onTap = { viewModel.setOperator(Operator.PLUS_MINUS) }
+                )
+            } // Row
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1.0f),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Operator.values().forEach { it ->
+                    if(it == Operator.DETAIL || it == Operator.ALL_CLEAR || it == Operator.PERCENT) {
+                        EmptyView()
+                    } else {
+                        OperatorButton(
+                            modifier = Modifier.weight(1.0f),
+                            operatorStr = it.buttonText((viewModel.operationsInProgress.value == Operator.NONE && viewModel.previousOperation.value == Operator.NONE)),
+                            onTap = { viewModel.setOperator(it) }
+                        )
+                    }
+                } // forEach
+            } // Row
         } // Row
     } // Column
 }

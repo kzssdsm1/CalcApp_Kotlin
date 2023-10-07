@@ -22,7 +22,7 @@ enum class Operator {
             EQUAL -> "="
             PLUS_MINUS -> "plusminus"
             ALL_CLEAR -> if (isAC) "AC" else "C"
-            DETAIL -> "showdetail"
+            DETAIL -> "SD"
             NONE -> ""
         }
     }
