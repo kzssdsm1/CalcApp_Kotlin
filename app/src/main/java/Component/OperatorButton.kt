@@ -13,15 +13,13 @@ import androidx.compose.ui.unit.sp
 fun OperatorButton(
     modifier: Modifier,
     operatorStr: String,
-    onTap: Unit
+    onTap: () -> Unit
 ) {
     Button(
         modifier = modifier
             .fillMaxHeight()
             .padding(all = 8.dp),
-        onClick = {
-            onTap
-        }
+        onClick = onTap
     ) {
         Text(
             text = operatorStr,

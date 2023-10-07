@@ -54,7 +54,7 @@ fun AppMain(
                     OperatorButton(
                         modifier = Modifier.weight(1.0f),
                         operatorStr = it.buttonText((viewModel.operationsInProgress.value == Operator.NONE && viewModel.previousOperation.value == Operator.NONE)),
-                        onTap = viewModel.setOperator(it)
+                        onTap = { viewModel.setOperator(it) }
                     )
                 }
             }
@@ -81,7 +81,7 @@ fun AppMain(
                             NumberButton(
                                 modifier = Modifier.weight(1.0f),
                                 numberStr = numbers[row][col],
-                                onTap = onTapNumber
+                                onTap = { viewModel.insertNumString(numbers[row][col]) }
                             )
                         }
                     }

@@ -24,38 +24,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-@Composable
-fun CountUp(viewModel: CountViewModel) {
-    val count: Int by viewModel.count.collectAsState()
-    
-    Column {
-        Text(
-            text = "$count"
-        )
-        
-        Button(onClick = {
-            viewModel.onCountUpTapped()
-        }) {
-            Text(
-                text = "Count Up"
-            )
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CalcApp_KotlinTheme {
-        Greeting("Android")
-    }
-}

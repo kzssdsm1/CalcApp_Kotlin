@@ -13,15 +13,13 @@ import androidx.compose.ui.unit.sp
 fun NumberButton(
     modifier: Modifier,
     numberStr: String,
-    onTap: (String) -> Unit
+    onTap: () -> Unit
 ) {
     Button(
         modifier = modifier
             .fillMaxHeight()
             .padding(all = 8.dp),
-        onClick = {
-            onTap(numberStr)
-        }
+        onClick = onTap
     ) {
         Text(
             text = numberStr,

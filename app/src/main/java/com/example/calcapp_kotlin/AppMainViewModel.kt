@@ -33,7 +33,7 @@ class AppMainViewModel: ViewModel() {
     fun insertNumString(str: String) {
         inputStr.value += str
 
-        trimInputString()
+        //trimInputString()
 
         _displayingNumber.value = inputStr.value
 
